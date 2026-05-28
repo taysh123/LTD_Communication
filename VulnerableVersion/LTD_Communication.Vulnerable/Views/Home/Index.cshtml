@@ -1,0 +1,78 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="alert alert-danger border-danger border-2 mb-4">
+    <h5 class="mb-1"><i class="bi bi-exclamation-triangle-fill"></i> VULNERABLE VERSION — Active Weaknesses</h5>
+    <ul class="mb-0 mt-2">
+        <li>SQL Injection: Login, Register, Add Customer, Forgot Password</li>
+        <li>Stored XSS: Customer Full Name field (rendered with <code>@@Html.Raw()</code>)</li>
+        <li>Passwords stored as plain text in the database</li>
+        <li>No account lockout after failed login attempts</li>
+    </ul>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-6">
+        <div class="card text-white bg-dark h-100">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-1 text-muted">Logged in as</h6>
+                <p class="card-text display-6 fw-bold">@ViewBag.Username</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card text-white bg-secondary h-100">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-1 text-light opacity-75">Total Customers</h6>
+                <p class="card-text display-6 fw-bold">@ViewBag.CustomerCount</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="card border-danger h-100">
+            <div class="card-header bg-danger text-white fw-bold">
+                <i class="bi bi-bug-fill"></i> SQL Injection Points
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><code>' OR '1'='1' --</code> on Login</li>
+                <li class="list-group-item">Username/Email on Register</li>
+                <li class="list-group-item">All fields on Add Customer</li>
+                <li class="list-group-item">Email on Forgot Password</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-warning h-100">
+            <div class="card-header bg-warning fw-bold">
+                <i class="bi bi-code-slash"></i> XSS Points
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Enter <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code></li>
+                <li class="list-group-item">As Customer Full Name when adding</li>
+                <li class="list-group-item">Script executes on Customer List page</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-info h-100">
+            <div class="card-header bg-info text-white fw-bold">
+                <i class="bi bi-lightning-fill"></i> Quick Actions
+            </div>
+            <div class="list-group list-group-flush">
+                <a asp-controller="Customer" asp-action="Add" class="list-group-item list-group-item-action">
+                    <i class="bi bi-person-plus me-2"></i> Add Customer
+                </a>
+                <a asp-controller="Customer" asp-action="List" class="list-group-item list-group-item-action">
+                    <i class="bi bi-people me-2"></i> View Customers
+                </a>
+                <a asp-controller="Account" asp-action="ChangePassword" class="list-group-item list-group-item-action">
+                    <i class="bi bi-key me-2"></i> Change Password
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

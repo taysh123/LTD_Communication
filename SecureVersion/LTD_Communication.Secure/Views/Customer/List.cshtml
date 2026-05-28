@@ -1,0 +1,60 @@
+@model List<Customer>
+@{
+    ViewData["Title"] = "Customers";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>
+        Customers
+        <span class="badge bg-success fs-6 ms-2">XSS Protected</span>
+    </h2>
+    <a asp-action="Add" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> Add Customer
+    </a>
+</div>
+
+<div class="alert alert-success border-2 py-2">
+    <strong><i class="bi bi-shield-fill-check"></i> XSS Blocked:</strong>
+    The <strong>Name</strong> column uses Razor's default <code>@@c.FullName</code> encoding.
+    Any <code>&lt;script&gt;</code> tags stored in the database are rendered as harmless escaped text.
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        No customers yet. <a asp-action="Add">Add the first customer</a>.
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover bg-white shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Name <span class="badge bg-success">Auto-Encoded</span></th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Sector</th>
+                    <th>Package</th>
+                    <th>Added</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model)
+                {
+                    <tr>
+                        <td>@c.Id</td>
+                        @* SECURE: Razor auto-HTML-encodes @c.FullName — script tags display as text *@
+                        <td>@c.FullName</td>
+                        <td>@c.Email</td>
+                        <td>@c.Phone</td>
+                        <td>@c.SectorName</td>
+                        <td>@c.PackageName</td>
+                        <td>@c.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

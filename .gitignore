@@ -1,0 +1,48 @@
+# .NET build output
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+*.userprefs
+
+# Visual Studio
+.vs/
+*.rsuser
+
+# VS Code
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
+.vscode/extensions.json
+.vscode/*.code-snippets
+
+# NuGet
+*.nupkg
+*.snupkg
+project.lock.json
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+
+# Publish output
+**/publish/
+**/PublishProfiles/
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# OS artefacts
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# SQL Server LocalDB data files
+*.mdf
+*.ldf
+*.ndf
+
+# Environment-specific appsettings overrides (keep base appsettings.json)
+appsettings.*.json
+!appsettings.Development.json

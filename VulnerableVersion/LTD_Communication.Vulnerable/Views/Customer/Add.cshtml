@@ -1,0 +1,71 @@
+@model AddCustomerViewModel
+@{
+    ViewData["Title"] = "Add Customer";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow border-danger">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0"><i class="bi bi-person-plus-fill"></i> Add Customer <small class="fs-6 ms-2">[VULNERABLE]</small></h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning py-2">
+                    <strong>Vulnerabilities:</strong>
+                    <ul class="mb-0">
+                        <li><strong>SQL Injection:</strong> All fields concatenated directly into SQL</li>
+                        <li><strong>Stored XSS:</strong> Try Full Name = <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code> — the script will execute on the List page</li>
+                    </ul>
+                </div>
+
+                <form asp-action="Add" method="post">
+                    <div asp-validation-summary="All" class="text-danger small mb-3"></div>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label asp-for="FullName" class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
+                            <input asp-for="FullName" class="form-control" placeholder="e.g. John Smith or <script>alert('XSS')</script>" />
+                            <span asp-validation-for="FullName" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Email" class="form-label fw-semibold">Email <span class="text-danger">*</span></label>
+                            <input asp-for="Email" class="form-control" type="email" />
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Phone" class="form-label fw-semibold">Phone</label>
+                            <input asp-for="Phone" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Address" class="form-label fw-semibold">Address</label>
+                            <input asp-for="Address" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="SectorId" class="form-label fw-semibold">Sector</label>
+                            <select asp-for="SectorId" class="form-select"
+                                    asp-items="@(new SelectList(Model.Sectors, "Id", "Name"))">
+                                <option value="">-- Select Sector --</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="PackageId" class="form-label fw-semibold">Internet Package</label>
+                            <select asp-for="PackageId" class="form-select"
+                                    asp-items="@(new SelectList(Model.Packages, "Id", "Name"))">
+                                <option value="">-- Select Package --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-4 d-flex gap-2">
+                        <button type="submit" class="btn btn-danger fw-bold">
+                            <i class="bi bi-plus-circle"></i> Add Customer
+                        </button>
+                        <a asp-action="List" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,79 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="alert alert-success border-success border-2 mb-4">
+    <h5 class="mb-1"><i class="bi bi-shield-fill-check"></i> SECURE VERSION — Protections Active</h5>
+    <ul class="mb-0 mt-2">
+        <li>All SQL queries use parameterized statements (<code>SqlParameter</code>) — SQL Injection blocked</li>
+        <li>All Razor output uses auto-encoding (<code>@@model</code>) — XSS blocked</li>
+        <li>Passwords hashed with PBKDF2-SHA256, 100,000 iterations + unique salt</li>
+        <li>Account lockout after 3 failed login attempts</li>
+        <li>Password policy enforced from <code>appsettings.json</code></li>
+    </ul>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-6">
+        <div class="card text-white bg-dark h-100">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-1 text-muted">Logged in as</h6>
+                <p class="card-text display-6 fw-bold">@ViewBag.Username</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card text-white bg-success h-100">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-1 text-light opacity-75">Total Customers</h6>
+                <p class="card-text display-6 fw-bold">@ViewBag.CustomerCount</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="card border-success h-100">
+            <div class="card-header bg-success text-white fw-bold">
+                <i class="bi bi-shield-check"></i> SQL Injection Protection
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><i class="bi bi-check-circle text-success me-2"></i>Login uses <code>@@Username</code> parameter</li>
+                <li class="list-group-item"><i class="bi bi-check-circle text-success me-2"></i>Register uses parameters for all fields</li>
+                <li class="list-group-item"><i class="bi bi-check-circle text-success me-2"></i>Add Customer fully parameterized</li>
+                <li class="list-group-item"><i class="bi bi-check-circle text-success me-2"></i>Forgot Password parameterized</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-success h-100">
+            <div class="card-header bg-success text-white fw-bold">
+                <i class="bi bi-code-slash"></i> XSS Protection
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><i class="bi bi-check-circle text-success me-2"></i>Razor auto-encodes all <code>@@model</code> output</li>
+                <li class="list-group-item"><i class="bi bi-check-circle text-success me-2"></i>No <code>@@Html.Raw()</code> used anywhere</li>
+                <li class="list-group-item"><i class="bi bi-check-circle text-success me-2"></i><code>&lt;script&gt;</code> tags rendered as literal text</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-info h-100">
+            <div class="card-header bg-info text-white fw-bold">
+                <i class="bi bi-lightning-fill"></i> Quick Actions
+            </div>
+            <div class="list-group list-group-flush">
+                <a asp-controller="Customer" asp-action="Add" class="list-group-item list-group-item-action">
+                    <i class="bi bi-person-plus me-2"></i> Add Customer
+                </a>
+                <a asp-controller="Customer" asp-action="List" class="list-group-item list-group-item-action">
+                    <i class="bi bi-people me-2"></i> View Customers
+                </a>
+                <a asp-controller="Account" asp-action="ChangePassword" class="list-group-item list-group-item-action">
+                    <i class="bi bi-key me-2"></i> Change Password
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
