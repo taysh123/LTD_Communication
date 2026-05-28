@@ -4,6 +4,7 @@
 *.user
 *.suo
 *.userprefs
+CLAUDE.md
 
 # Visual Studio
 .vs/
